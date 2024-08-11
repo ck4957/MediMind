@@ -18,13 +18,13 @@ export const HealthReadingsUI = () => {
   };
 
   const connectBluetooth = async () => {
-    if (!navigator.bluetooth) {
+    if (!(navigator as any).bluetooth) {
       setError("Bluetooth is not supported in this browser.");
       return;
     }
 
     try {
-      const device = await navigator.bluetooth.requestDevice({
+      const device = await (navigator as any).bluetooth.requestDevice({
         filters: [{ services: ['heart_rate'] }]
       });
       const server = await device.gatt.connect();
@@ -33,7 +33,7 @@ export const HealthReadingsUI = () => {
       // Here you would typically set up listeners for incoming data
       // and handle the actual reading of data from the device
     } catch (error) {
-      setError(`Bluetooth Error: ${error.message}`);
+      setError(`Bluetooth Error: ${(error as any).message}`);
     }
   };
 

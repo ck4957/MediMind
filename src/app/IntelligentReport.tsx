@@ -23,22 +23,22 @@ const samplePatients = [
 ];
 
 // Simulated function to generate a patient report
-const generatePatientReport = (patient) => {
+const generatePatientReport = (patient: any) => {
   return `
     Patient Report for ${patient.name}
     Date of Birth: ${patient.birthDate}
     Gender: ${patient.gender}
     
     Conditions:
-    ${patient.conditions.map(condition => `- ${condition}`).join('\n')}
+    ${patient.conditions.map((condition:any) => `- ${condition}`).join('\n')}
     
     Current Medications:
-    ${patient.medications.map(medication => `- ${medication}`).join('\n')}
+    ${patient.medications.map((medication:any) => `- ${medication}`).join('\n')}
   `;
 };
 
 // Simulated function to suggest treatment plans
-const suggestTreatmentPlan = (patient) => {
+const suggestTreatmentPlan = (patient:any) => {
   let plan = `Treatment Plan for ${patient.name}:\n\n`;
   
   if (patient.conditions.includes('Hypertension')) {
@@ -69,7 +69,7 @@ export const IntelligentReport = () => {
   const [patientReport, setPatientReport] = useState('');
   const [treatmentPlan, setTreatmentPlan] = useState('');
 
-  const handlePatientSelect = (patient) => {
+  const handlePatientSelect = (patient: any) => {
     setSelectedPatient(patient);
     setPatientReport('');
     setTreatmentPlan('');
@@ -107,7 +107,7 @@ export const IntelligentReport = () => {
         <div className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Selected Patient: {selectedPatient.name}</CardTitle>
+              <CardTitle>Selected Patient: {(selectedPatient as any).name}</CardTitle>
             </CardHeader>
             <CardContent>
               <Button onClick={handleGenerateReport} className="mr-2">Generate Report</Button>
