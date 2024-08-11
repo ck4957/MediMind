@@ -4,16 +4,17 @@ import { useState } from 'react';
 import { IntelligentReport } from './IntelligentReport'
 import { HealthReadingsUI} from './HealthReadingsUI'
 import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { cn } from "@/src/lib/utils"
 import {
   NavigationMenu,
-  NavigationMenuContent,
+
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
+
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/src/ui/navigation-menu"
+
 export default function Home() {
 
     const [activeTab, setActiveTab] = useState('')

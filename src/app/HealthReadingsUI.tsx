@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/src/ui/button';
+import { Card, CardHeader, CardContent } from '@/src/ui/card';
+import { Alert, AlertDescription } from '@/src/ui/alert';
 
 export const HealthReadingsUI = () => {
   const [pulse, setPulse] = useState('');
