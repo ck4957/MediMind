@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from 'react';
 import { IntelligentReport } from './IntelligentReport'
 import { HealthReadingsUI} from './HealthReadingsUI'
+import { NoteFhir } from "./NoteFhir";
 import Link from "next/link"
 import { cn } from "@/src/lib/utils"
 import {
@@ -17,41 +18,33 @@ import {
 
 export default function Home() {
 
-    const [activeTab, setActiveTab] = useState('')
+  const menuItems = [
+    { name: 'Medi Mind', href: '', tab: 'intelligent-report', component: <IntelligentReport/> },
+    { name: 'Blue Pulse', href: '', tab: 'health-readings', component: <HealthReadingsUI/> },
+    { name: 'Note 2 FHIR', href: '', tab: 'note-fhir', component: <NoteFhir/> }
+    // Add more menu items as needed
+  ];
 
-    const renderContent = () => {
-        switch (activeTab) {
-            case 'health-readings':
-                return <HealthReadingsUI />;
-            case 'intelligent-report':
-                return <IntelligentReport />;
-        }
-    };
+  const [activeMenuItem, setActiveMenuItem] = useState(menuItems[0])
+  const renderContent = () => (activeMenuItem as any).component;
 
 
     return (
         <div className="container">
-            {/* <nav className="tabs">
-            <button onClick={() => setActiveTab('intelligent-report')}>Medi Mind</button>
-                <button >Blue Pulse</button>
-            </nav>
-           */}
             <NavigationMenu>
               <NavigationMenuList>
-              <NavigationMenuItem>
-                  <Link href=""  legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()} onClick={() => setActiveTab('intelligent-report')} >
-                    Medi Mind
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link href="" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()} onClick={() => setActiveTab('health-readings')} >
-                      Blue Pulse
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
+                {menuItems.map((item, index) => (
+                  <NavigationMenuItem key={index}>
+                    <Link href={item.href} legacyBehavior passHref>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                        onClick={() => setActiveMenuItem(item as any)}
+                      >
+                        {item.name}
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                ))}
               </NavigationMenuList>
             </NavigationMenu>
             <div className="content">

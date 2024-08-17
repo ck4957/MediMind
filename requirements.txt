@@ -2,3 +2,5 @@ fastapi==0.100.1
 uvicorn[standard]==0.23.2
 transformers
 flask-cors
+flask_cors
+peft
