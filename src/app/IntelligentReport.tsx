@@ -80,6 +80,14 @@ export const IntelligentReport = () => {
     if (selectedPatient) {
       setIsLoading(true);
       try {
+
+        const test = await fetch(`${BACKEND_URL}/python`, {
+          method: 'GET'
+        });
+        const test_res = await test.json();
+        console.log('Test API:', test_res);
+
+        
         const response = await fetch(`${BACKEND_URL}/generate_report`, {
           method: 'POST',
           headers: {

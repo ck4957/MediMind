@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from flask_cors import CORS
 from transformers import  pipeline, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 from peft import get_peft_model
 import torch
 import json
@@ -15,16 +14,16 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
 app = FastAPI()
-CORS(app)
+# CORS(app)
 @app.get("/api/python")
 def hello_world():
     return {"message": "Hello World"}
-
 def generate_text(prompt, max_length=500):
     inputs = tokenizer(prompt, return_tensors="pt")
     with torch.no_grad():
         outputs = model.generate(**inputs, max_length=max_length)
     return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
 
 @app.post('/generate_report')
 def generate_report():
@@ -75,19 +74,20 @@ def load_model():
 
     return model, tokenizer
 
-model, tokenizer = load_model()
 
-generator = pipeline(
-    model=model,
-    tokenizer=tokenizer,
-    task="text-generation",
-    do_sample=False,
-    eos_token_id=model.config.eos_token_id,
-    max_length=4096
-)
 
 @app.route('/convert', methods=['POST'])
 def convert_note_to_fhir():
+    model, tokenizer = load_model()
+    generator = pipeline(
+        model=model,
+        tokenizer=tokenizer,
+        task="text-generation",
+        do_sample=False,
+        eos_token_id=model.config.eos_token_id,
+        max_length=4096
+    )
+
     data = request.json
     clinical_note = data.get('note', '')
 
@@ -127,5 +127,9 @@ CLINICAL NOTE
 
     return jsonify(result)
 
+'''
 if __name__ == '__main__':
-    app.run(debug=True)
+    import uvicorn
+    uvicorn.run(app)
+
+'''
