@@ -57,10 +57,11 @@ class LabResultsProducer:
                 'triglycerides': random.uniform(50, 200), # mg/dL
                 
                 # Tumor markers
-                'cea': random.uniform(0.0, 8.0),          # ng/mL
+                'cea': random.uniform(0.0, 15.0),          # ng/mL (Carcinoembryonic Antigen)
+                'cyfra_21_1': random.uniform(0.5, 5.0),    # ng/mL (Cytokeratin 19 fragment)
+                'nse': random.uniform(5.0, 25.0),          # ng/mL (Neuron-specific enolase)
                 'ca_125': random.uniform(0, 50),          # U/mL
                 'psa': random.uniform(0.0, 4.0),          # ng/mL (for males)
-                'ca_19_9': random.uniform(0, 40),         # U/mL
             },
             'abnormal_flags': [],
             'critical_values': [],
@@ -69,18 +70,18 @@ class LabResultsProducer:
         # Flag abnormal values
         if data['results']['cea'] > 5.0:
             data['abnormal_flags'].append('CEA elevated')
-        if data['results']['ca_125'] > 35:
-            data['abnormal_flags'].append('CA-125 elevated')
-        if data['results']['psa'] > 3.0:
-            data['abnormal_flags'].append('PSA elevated')
+        if data['results']['cyfra_21_1'] > 3.3:
+            data['abnormal_flags'].append('CYFRA 21-1 elevated')
+        if data['results']['nse'] > 12.5:
+            data['abnormal_flags'].append('NSE elevated')
         if data['results']['wbc_count'] > 10.0 or data['results']['wbc_count'] < 4.5:
             data['abnormal_flags'].append('WBC abnormal')
         
         # Flag critical values
         if data['results']['cea'] > 10.0:
             data['critical_values'].append('CEA critically elevated')
-        if data['results']['ca_125'] > 100:
-            data['critical_values'].append('CA-125 critically elevated')
+        if data['results']['cyfra_21_1'] > 10.0:
+            data['critical_values'].append('CYFRA 21-1 critically elevated')
         
         return data
     

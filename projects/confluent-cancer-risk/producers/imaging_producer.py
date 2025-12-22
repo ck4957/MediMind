@@ -45,7 +45,9 @@ class ImagingProducer:
             'body_part': random.choice(body_parts),
             'findings': {
                 'nodules_detected': random.choice([True, False]),
-                'nodule_size_mm': random.uniform(2.0, 25.0) if random.random() > 0.5 else None,
+                'nodule_size_mm': random.uniform(2.0, 35.0) if random.random() > 0.4 else None,
+                'ground_glass_opacity': random.choice([True, False]),
+                'pleural_effector': random.choice([True, False]),
                 'suspicious_masses': random.choice([True, False]),
                 'calcifications': random.choice([True, False]),
                 'lymph_node_enlargement': random.choice([True, False]),
@@ -60,12 +62,13 @@ class ImagingProducer:
     def _generate_radiologist_notes(self) -> str:
         """Generate synthetic radiologist notes"""
         notes = [
-            "No significant abnormalities detected. Follow-up recommended in 12 months.",
-            "Small nodule observed in upper lobe. Recommend follow-up CT in 3 months.",
-            "Multiple calcifications noted. Benign appearance. Routine follow-up.",
-            "Suspicious mass detected. Recommend biopsy for further evaluation.",
-            "Enlarged lymph nodes observed. Clinical correlation recommended.",
-            "Ground-glass opacities present. Cannot rule out early malignancy.",
+            "No significant abnormalities detected in lung fields. Mediastinum clear.",
+            "Solitary pulmonary nodule observed in right upper lobe, measuring 12mm. Spiculated margins suspicious for malignancy.",
+            "Multiple bilateral pulmonary nodules noted, suggestive of metastatic disease. Correlate with clinical history.",
+            "Ground-glass opacity persisting in left lower lobe. Recommend follow-up CT in 3 months.",
+            "Large cavitary mass in left upper lobe with associated hilar lymphadenopathy. Highly suspicious for primary bronchogenic carcinoma.",
+            "Mild emphysematous changes. No focal consolidation or effusion.",
+            "Stable appearance of known granuloma. No new findings."
         ]
         return random.choice(notes)
     

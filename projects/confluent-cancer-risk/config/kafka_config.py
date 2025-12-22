@@ -29,6 +29,7 @@ class KafkaConfig:
     TOPIC_CLINICAL_NOTES = os.getenv('TOPIC_CLINICAL_NOTES', 'clinical-notes-stream')
     TOPIC_PREDICTIONS = os.getenv('TOPIC_PREDICTIONS', 'risk-predictions-stream')
     TOPIC_ALERTS = os.getenv('TOPIC_ALERTS', 'alerts-stream')
+    TOPIC_PATIENT_PROFILES = os.getenv('TOPIC_PATIENT_PROFILES', 'patient-profiles-stream')
     
     @classmethod
     def get_producer_config(cls) -> Dict[str, str]:
@@ -121,6 +122,14 @@ TOPIC_CONFIGS = {
     },
     'alerts-stream': {
         'num_partitions': 2,
+        'replication_factor': 3,
+        'config': {
+            'retention.ms': '2592000000',
+            'compression.type': 'snappy',
+        }
+    },
+    'patient-profiles-stream': {
+        'num_partitions': 3,
         'replication_factor': 3,
         'config': {
             'retention.ms': '2592000000',
